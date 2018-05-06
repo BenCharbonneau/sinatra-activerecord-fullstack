@@ -28,4 +28,9 @@ class ItemController < Sinatra::Base
 		erb :'items/new'
 	end
 
+	post '/' do
+		pp params
+		p "You posted. Check your terminal." 
+	end
+
 end
