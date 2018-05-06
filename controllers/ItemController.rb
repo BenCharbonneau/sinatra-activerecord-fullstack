@@ -29,8 +29,12 @@ class ItemController < Sinatra::Base
 	end
 
 	post '/' do
-		pp params
-		p "You posted. Check your terminal." 
+
+		@item = Item.new
+		@item.title = params[:title]
+		@item.user_id = 1
+		@item.save
+		p @item.to_json
 	end
 
 end
