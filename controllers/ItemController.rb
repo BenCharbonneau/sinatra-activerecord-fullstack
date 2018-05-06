@@ -33,6 +33,30 @@ class ItemController < Sinatra::Base
 		erb :'items/new'
 	end
 
+	get '/edit/:id' do
+		item = Item.find_by(id: params[:id])
+
+		@page_title = "Edit item"
+		@action = params[:id]
+		@method = 'POST'
+		@value = item.title
+		@placeholder = 'Title'
+		@buttontext = 'Update Item'
+
+		erb :'items/edit'
+	end
+
+	put '/edit/:id' do
+		item = Item.find_by(id: params[:id])
+
+		item.title = params[:title]
+		item.user_id = 1
+		item.save
+
+		redirect '/items'
+
+	end
+
 	delete '/:id' do
 		item = Item.find_by(id: params[:id])
 		item.destroy
