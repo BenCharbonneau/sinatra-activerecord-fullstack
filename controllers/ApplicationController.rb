@@ -13,6 +13,8 @@ class ApplicationController < Sinatra::Base
 
 	get '/' do
 		#binding.pry
+		@page_title = "Basic template"
+
 		erb :basic
 	end
 
