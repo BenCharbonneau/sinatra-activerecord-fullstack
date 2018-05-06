@@ -19,6 +19,11 @@ class ItemController < Sinatra::Base
 
 	get '/new' do
 		@page_title = "Add item"
+		@action = '/items'
+		@method = 'POST'
+		@value = ''
+		@placeholder = 'Title'
+		@buttontext = 'Create Item'
 
 		erb :'items/new'
 	end
