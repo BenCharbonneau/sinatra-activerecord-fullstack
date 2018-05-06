@@ -13,6 +13,7 @@ class ItemController < Sinatra::Base
 
 	get '/' do
 		@page_title = "Item index"
+		@items = Item.all
 
 		erb :'items/index'
 	end
@@ -34,7 +35,8 @@ class ItemController < Sinatra::Base
 		@item.title = params[:title]
 		@item.user_id = 1
 		@item.save
-		p @item.to_json
+
+		redirect '/items'
 	end
 
 end
