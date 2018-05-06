@@ -11,6 +11,9 @@ class ItemController < Sinatra::Base
 	set :root, File.join(File.dirname(__FILE__),'..')
 	set :views, Proc.new { File.join(root, "views") }
 
+	use Rack::MethodOverride
+	set :method_override, true
+
 	get '/' do
 		@page_title = "Item index"
 		@items = Item.all
@@ -27,6 +30,13 @@ class ItemController < Sinatra::Base
 		@buttontext = 'Create Item'
 
 		erb :'items/new'
+	end
+
+	delete '/:id' do
+		item = Item.find_by(id: params[:id])
+		item.destroy
+
+		redirect '/items'
 	end
 
 	post '/' do

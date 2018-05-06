@@ -11,6 +11,9 @@ class ApplicationController < Sinatra::Base
 	set :root, File.join(File.dirname(__FILE__),'..')
 	set :views, Proc.new { File.join(root, "views") }
 
+	use Rack::MethodOverride
+	set :method_override, true
+
 	get '/' do
 		#binding.pry
 		@page_title = "Basic template"

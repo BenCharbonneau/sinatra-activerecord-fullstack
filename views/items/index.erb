@@ -1,6 +1,12 @@
 <h3>Items index</h3>
 <ul>
 <% @items.each do |item| %>
-	<li><%= item.title %></li>
+	<li>
+		<%= item.title %>
+		<form action="/items/<%= item.id %>" method="POST">
+			<input type="hidden" name="_method" value="DELETE">
+			<input type="submit" value="Delete">
+		</form>
+	</li>
 <% end %>
 </ul>
