@@ -10,6 +10,7 @@ class ApplicationController < Sinatra::Base
 
 	set :root, File.join(File.dirname(__FILE__),'..')
 	set :views, Proc.new { File.join(root, "views") }
+	set :public, Proc.new { File.join(root, "public") }
 
 	use Rack::MethodOverride
 	set :method_override, true
