@@ -61,7 +61,6 @@ class UserController < ApplicationController
 
 		user.username = params[:username]
 		user.password = params[:password]
-		user.user_id = 1
 		user.save
 
 		session[:message] = "You updated user \##{user.id}."
@@ -84,12 +83,15 @@ class UserController < ApplicationController
 		@user = User.new
 		@user.username = params[:username]
 		@user.password = params[:password]
-		@user.user_id = 1
+		@user.save
+
+		@user.user_id = @user.id
 		@user.save
 
 		session[:logged_in] = true
 		session[:username] = @user.username
-		session[:message] = "You registered as \##{@user.username}."
+		session[:user_id] = @user.id
+		session[:message] = "You registered as #{@user.username}."
 
 		redirect '/items'
 	end
@@ -98,9 +100,11 @@ class UserController < ApplicationController
 
 		@user = User.find_by(username: params[:username])
 		if @user and @user.password === params[:password]
+
 			session[:message] = "Logged in as " + @user.username
 			session[:logged_in] = true
 			session[:username] = @user.username
+			session[:user_id] = @user.id
 
 			redirect '/items'
 		else

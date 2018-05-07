@@ -44,7 +44,6 @@ class ItemController < ApplicationController
 		item = Item.find_by(id: params[:id])
 
 		item.title = params[:title]
-		item.user_id = 1
 		item.save
 
 		session[:message] = "You updated item \##{item.id}."
@@ -66,7 +65,7 @@ class ItemController < ApplicationController
 
 		@item = Item.new
 		@item.title = params[:title]
-		@item.user_id = 1
+		@item.user_id = session[:user_id]
 		@item.save
 
 		session[:message] = "You added item \##{@item.id}."
