@@ -12,6 +12,12 @@
 		</nav>
 	</header>
 	<h1>Awesome to do list App!</h1>
+	<% if session[:message] %>
+		<p class="msg">
+			<%= session[:message] %>
+		</p>
+		<% session[:message] = nil 
+	end %>
 	<%= yield %>
 </body>
 </html>

@@ -28,3 +28,9 @@
     text-decoration: none;
     border-radius: 4px;
 }
+
+p.msg {
+    background: lightgreen;
+    color: brown;
+    border: 1px solid black;
+}

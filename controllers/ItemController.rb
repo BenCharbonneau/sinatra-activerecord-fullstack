@@ -1,23 +1,16 @@
 class ItemController < Sinatra::Base
 
-	require 'bundler'
-	Bundler.require()
-
-	ActiveRecord::Base.establish_connection(
-		:adapter => 'postgresql',
-		:database => 'item'
-	)
-
 	set :root, File.join(File.dirname(__FILE__),'..')
 	set :views, Proc.new { File.join(root, "views") }
 	set :public, Proc.new { File.join(root, "public") }
-	
-	use Rack::MethodOverride
-	set :method_override, true
+
+	enable :sessions
 
 	get '/' do
 		@page_title = "Item index"
 		@items = Item.all
+
+		pp session
 
 		erb :'items/index'
 	end
@@ -53,12 +46,16 @@ class ItemController < Sinatra::Base
 		item.user_id = 1
 		item.save
 
+		session[:message] = "You updated item \##{item.id}."
+		pp session
 		redirect '/items'
 
 	end
 
 	delete '/:id' do
 		item = Item.find_by(id: params[:id])
+		session[:message] = "You deleted item \##{item.id}."
+
 		item.destroy
 
 		redirect '/items'
@@ -70,6 +67,8 @@ class ItemController < Sinatra::Base
 		@item.title = params[:title]
 		@item.user_id = 1
 		@item.save
+
+		session[:message] = "You added item \##{@item.id}."
 
 		redirect '/items'
 	end
