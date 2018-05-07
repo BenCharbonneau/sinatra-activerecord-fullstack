@@ -1,6 +1,10 @@
 class UserController < ApplicationController
 
 	get '/' do
+		if !session[:logged_in] and !session[:admin]
+			session[:message] = "You must be logged in as an administrator to see that."
+			redirect '/users/login'
+		end
 		@page_title = "User index"
 		@users = User.all
 		@db = 'user'
@@ -42,6 +46,14 @@ class UserController < ApplicationController
 		@db = 'user'
 
 		erb :'users/edit'
+	end
+
+	get '/logout' do
+
+		session.destroy
+		session[:message] = "Logged out"
+
+		redirect 'users/login'
 	end
 
 	put '/edit/:id' do
