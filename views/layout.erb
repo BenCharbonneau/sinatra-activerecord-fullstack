@@ -9,6 +9,11 @@
 		<nav>
 			<a href="/<%= @db %>s">Index</a>
 			<a href="/<%= @db %>s/new">New <%= @db %></a>
+			<% if session[:logged_in] %>
+				Logged in as <%= session[:username] %>. <a href="/users/logout">Logout</a>
+			<% else %>
+				<a href="/users/login">Login</a>
+			<% end %>
 		</nav>
 	</header>
 	<h1>Awesome to do list App!</h1>

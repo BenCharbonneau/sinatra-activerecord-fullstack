@@ -75,7 +75,7 @@ class UserController < ApplicationController
 		@user.user_id = 1
 		@user.save
 
-		session[:loggedIn] = true
+		session[:logged_in] = true
 		session[:username] = @user.username
 		session[:message] = "You registered as \##{@user.username}."
 
@@ -87,7 +87,7 @@ class UserController < ApplicationController
 		@user = User.find_by(username: params[:username])
 		if @user and @user.password === params[:password]
 			session[:message] = "Logged in as " + @user.username
-			session[:loggedIn] = true
+			session[:logged_in] = true
 			session[:username] = @user.username
 
 			redirect '/items'
