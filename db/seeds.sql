@@ -1,1 +1,1 @@
-INSERT INTO users (username, password, user_id) VALUES ('Ben', 'Password', 1);
+INSERT INTO users (username, password_digest, user_id) VALUES ('Ben', 'Password', 1);
