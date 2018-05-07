@@ -9,8 +9,8 @@ class ItemController < ApplicationController
 
 	get '/' do
 		@page_title = "Item index"
-		@user = User.find session[:user_id]
-		@items = @user.items
+		@user = User.find(session[:user_id])
+		@items = @user.items.order('id')
 		@db = 'item'
 
 		erb :'items/index'
