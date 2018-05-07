@@ -8,15 +8,26 @@ class UserController < ApplicationController
 		erb :'users/index'
 	end
 
-	get '/new' do
-		@page_title = "Add a user"
-		@action = '/users'
+	get '/register' do
+		@page_title = "Register"
+		@action = '/users/register'
 		@method = 'POST'
 		@inputs = [ { name: 'username', value: ''},{ name: 'password', value: '', type: 'password' }]
-		@buttontext = 'Create User'
+		@buttontext = 'Register'
 		@db = 'user'
 
-		erb :'users/new'
+		erb :'users/register'
+	end
+
+	get '/login' do
+		@page_title = "Login"
+		@action = '/users/login'
+		@method = 'POST'
+		@inputs = [ { name: 'username', value: ''},{ name: 'password', value: '', type: 'password' }]
+		@buttontext = 'Login'
+		@db = 'user'
+
+		erb :'users/login'
 	end
 
 	get '/edit/:id' do
@@ -56,7 +67,7 @@ class UserController < ApplicationController
 		redirect '/users'
 	end
 
-	post '/' do
+	post '/register' do
 
 		@user = User.new
 		@user.username = params[:username]
@@ -66,7 +77,21 @@ class UserController < ApplicationController
 
 		session[:message] = "You added user \##{@user.id}."
 
-		redirect '/users'
+		redirect '/items'
+	end
+
+	post '/login' do
+
+		@user = User.find_by(username: params[:username])
+		if @user and @user.password === params[:password]
+			session[:message] = "Logged in as " + @user.username
+			session[:loggedIn] = true
+			session[:username] = @user.username
+
+			redirect '/items'
+		else
+			redirect '/users/login'
+		end
 	end
 
 end
