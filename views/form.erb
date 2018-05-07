@@ -1,4 +1,13 @@
 <form action=<%= @action %> method=<%= @method %> class="accent">
-	<input type="text" name="title" value="<%= @value %>" placeholder="<%= @placeholder %>">
+	<% @inputs.each do |input| 
+		if !input[:type]
+			input[:type] = "text"
+		end
+	%>
+	<input type="<%= input[:type] %>" name="<%= input[:name] %>" value="<%= input[:value] %>" placeholder="<%= input[:name].upcase %>">
+	<% end %>
+	<% if @methodoverride %>
+		<input type="hidden" name="_method" value="<%= @methodoverride %>">
+	<% end %>
 	<button type="submit"><%= @buttontext %></button>
 </form>

@@ -3,7 +3,9 @@ require 'sinatra/activerecord'
 
 require './controllers/ApplicationController'
 require './controllers/ItemController'
+require './controllers/UserController'
 
+require './models/UserModel'
 require './models/ItemModel'
 
 require 'bundler'
@@ -17,10 +19,15 @@ ActiveRecord::Base.establish_connection(
 use Rack::MethodOverride
 set :method_override, true
 
+map('/') {
+	run ApplicationController
+}
+
 map('/items') {
 	run ItemController
 }
 
-map('/') {
-	run ApplicationController
+map('/users') {
+	run UserController
 }
+

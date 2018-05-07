@@ -1,0 +1,14 @@
+<h3>Users index</h3>
+<ul>
+<% @users.each do |user| %>
+	<li>
+		<%= user.username %>
+
+		<form action="/users/<%= user.id %>" method="POST">
+			<input type="hidden" name="_method" value="DELETE">
+			<input type="submit" value="Delete">
+		</form>
+		<a class='btn' href='/users/edit/<%= user.id %>'>Edit</a>
+	</li>
+<% end %>
+</ul>

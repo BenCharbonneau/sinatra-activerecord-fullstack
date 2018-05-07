@@ -1,16 +1,9 @@
-class ItemController < Sinatra::Base
-
-	set :root, File.join(File.dirname(__FILE__),'..')
-	set :views, Proc.new { File.join(root, "views") }
-	set :public, Proc.new { File.join(root, "public") }
-
-	enable :sessions
+class ItemController < ApplicationController
 
 	get '/' do
 		@page_title = "Item index"
 		@items = Item.all
-
-		pp session
+		@db = 'item'
 
 		erb :'items/index'
 	end
@@ -19,9 +12,9 @@ class ItemController < Sinatra::Base
 		@page_title = "Add item"
 		@action = '/items'
 		@method = 'POST'
-		@value = ''
-		@placeholder = 'Title'
+		@inputs = [{name: 'title', value: '' }]
 		@buttontext = 'Create Item'
+		@db = 'item'
 
 		erb :'items/new'
 	end
@@ -32,9 +25,10 @@ class ItemController < Sinatra::Base
 		@page_title = "Edit item"
 		@action = params[:id]
 		@method = 'POST'
-		@value = item.title
-		@placeholder = 'Title'
+		@inputs = [{name: 'title', value: item.title }]
+		@methodoverride = 'PUT'
 		@buttontext = 'Update Item'
+		@db = 'item'
 
 		erb :'items/edit'
 	end
@@ -47,7 +41,7 @@ class ItemController < Sinatra::Base
 		item.save
 
 		session[:message] = "You updated item \##{item.id}."
-		pp session
+
 		redirect '/items'
 
 	end
