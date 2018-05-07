@@ -75,7 +75,9 @@ class UserController < ApplicationController
 		@user.user_id = 1
 		@user.save
 
-		session[:message] = "You added user \##{@user.id}."
+		session[:loggedIn] = true
+		session[:username] = @user.username
+		session[:message] = "You registered as \##{@user.username}."
 
 		redirect '/items'
 	end
