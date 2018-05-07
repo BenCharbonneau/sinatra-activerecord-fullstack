@@ -9,7 +9,8 @@ class ItemController < ApplicationController
 
 	get '/' do
 		@page_title = "Item index"
-		@items = Item.all
+		@user = User.find session[:user_id]
+		@items = @user.items
 		@db = 'item'
 
 		erb :'items/index'
@@ -29,15 +30,20 @@ class ItemController < ApplicationController
 	get '/edit/:id' do
 		item = Item.find_by(id: params[:id])
 
-		@page_title = "Edit item"
-		@action = params[:id]
-		@method = 'POST'
-		@inputs = [{name: 'title', value: item.title }]
-		@methodoverride = 'PUT'
-		@buttontext = 'Update Item'
-		@db = 'item'
+		if item.user_id != session[:user_id]
+			session[:message] = "You can't edit other users' items."
+			redirect '/items'
+		else
+			@page_title = "Edit item"
+			@action = params[:id]
+			@method = 'POST'
+			@inputs = [{name: 'title', value: item.title }]
+			@methodoverride = 'PUT'
+			@buttontext = 'Update Item'
+			@db = 'item'
 
-		erb :'items/edit'
+			erb :'items/edit'
+		end
 	end
 
 	put '/edit/:id' do
